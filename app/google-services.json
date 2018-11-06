@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "92107788040",
+    "firebase_url": "https://acco-27598.firebaseio.com",
+    "project_id": "acco-27598",
+    "storage_bucket": "acco-27598.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92107788040:android:dd1ae43deafdf4d3",
+        "android_client_info": {
+          "package_name": "com.example.kassem.acc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92107788040-7on9cn1gj51ke74k382idgrpprn5vd6a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnDkwc83HkRZ_AAbptSp_PFstKobmTce8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
