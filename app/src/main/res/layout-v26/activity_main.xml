@@ -11,13 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/client"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:autofillHints=""
-            android:inputType="" />
-
         <Button
             android:id="@+id/upload"
             android:layout_width="match_parent"
@@ -29,23 +22,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/client" />
 
-        <LinearLayout
+        <Spinner
+            android:id="@+id/myspinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/myspinner"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:text="TextView" />
-        </LinearLayout>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
