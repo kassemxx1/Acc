@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
+import com.google.firestore.v1beta1.DocumentTransform;
 
 import java.sql.Array;
 import java.sql.Time;
@@ -43,7 +44,7 @@ import java.util.SimpleTimeZone;
 import java.util.stream.IntStream;
 
 public class MainActivity extends AppCompatActivity {
-    Map<String, Object> nameofvilaage = new HashMap<>();
+
 
           List<String> villages;
           ArrayList<String> clients;
@@ -51,11 +52,19 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> spinnerArrayAdapter2;
     String village;
     Spinner spinner2;
+    TextView name;
+    String client;
+    String esm;
+    TextView adress;
+    TextView phone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asd);
-
+         name=(TextView)findViewById(R.id.nameofclient);
+         adress=(TextView)findViewById(R.id.adress);
+         phone=(TextView)findViewById(R.id.phonenumber);
         villages = new ArrayList<>();
         clients = new ArrayList<>();
         Spinner spinner = (Spinner) findViewById(R.id.myspinner);
@@ -63,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         villages.add("");
      retrievevillage();
 
-
+add();
 
 //// Application of the Array to the Spinner
         spinnerArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,villages);
@@ -77,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
                     clients.add("");
                     retrieveclient(village);
                     spinerclient();
+
+
                 }
 
                 @Override
@@ -87,29 +98,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-//    void add(){
-//
-//        nameofvilaage.put("numberofjara",7);
-//        nameofvilaage.put("mabi3",10000);
-//        nameofvilaage.put("den",7000);
-//        nameofvilaage.put("numberofmortaja3",5);
-//
-//        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-//        String format = s.format(new Date());
-//
-//        String Clienttt=clientt.getText().toString();
-//        nameofvilaage.put("time",format);
-//        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//                db.collection("zawater").document("zawtar").collection("client").document(Clienttt).collection("transaction").document("ffffff").set(nameofvilaage).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                  @Override
-//                    public void onSuccess(Void aVoid) {
-//
-//                                   }
-//                           });
-//
-//
-//                     }
+    void add(){
+        Map<String, Object> transcationn = new HashMap<>();
+         transcationn.put("3adad eljarat",3);
+        transcationn.put("7a2 eljarat",3000);
+        transcationn.put("den",0);
+        transcationn.put("jarat mortaja3",2);
+        transcationn.put("nameofclient","ali jaber");
+        transcationn.put("taskir den",0);
+       // transcation.put("time",DocumentTransform.FieldTransform.ServerValue.REQUEST_TIME);
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                db.collection("transaction").document()
+                        .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
+                  @Override
+                    public void onSuccess(Void aVoid) {
+
+                                   }
+                           });
+
+
+                     }
 
 void retrievevillage(){
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -156,7 +165,8 @@ void spinerclient(){
     spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            client = parent.getSelectedItem().toString();
+            retriveinformation(village,client);
         }
 
         @Override
@@ -164,6 +174,31 @@ void spinerclient(){
 
         }
     });
+}
+void retriveinformation(String albalda, String elname){
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final Task<QuerySnapshot> querySnapshotTask = db.collection("nameofclient").whereEqualTo("balda",albalda).whereEqualTo("name",elname)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()){
+
+                        for (DocumentSnapshot document :task.getResult()) {
+                          esm = document.getData().get("name").toString();
+                            name.setText(esm);
+                            String phonenumber=document.getData().get("phonenumber").toString();
+                            phone.setText(phonenumber);
+                            String adresss=document.getData().get("location").toString();
+                            adress.setText(adresss);
+
+                        }
+
+
+                    }
+                }
+            });
+
 }
 
 
