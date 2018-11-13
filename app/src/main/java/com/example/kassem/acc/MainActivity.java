@@ -1,5 +1,6 @@
 package com.example.kassem.acc;
 
+import android.database.DataSetObserver;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -7,13 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.SimpleTimeZone;
 import java.util.stream.IntStream;
@@ -40,47 +45,48 @@ import java.util.stream.IntStream;
 public class MainActivity extends AppCompatActivity {
     Map<String, Object> nameofvilaage = new HashMap<>();
 
-          EditText clientt;
-          Button uploadd;
-          ArrayList<String> villages;
+          List<String> villages;
           ArrayList<String> clients;
-
-    Spinner spinner ;
+    ArrayAdapter<String> spinnerArrayAdapter;
+    ArrayAdapter<String> spinnerArrayAdapter2;
+    String village;
+    Spinner spinner2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-                 super.onCreate(savedInstanceState);
-                 setContentView(R.layout.activity_main);
-                 clientt=(EditText)findViewById(R.id.client);
-                 uploadd=(Button)findViewById(R.id.upload);
-                 villages=new  ArrayList<>();
-                 clients=new ArrayList<>();
-                 spinner =  (Spinner) findViewById(R.id.myspinner);
-                 retrievevillage();
-                 retrieveclient();
-            uploadd.setOnClickListener(new View.OnClickListener() {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.asd);
+
+        villages = new ArrayList<>();
+        clients = new ArrayList<>();
+        Spinner spinner = (Spinner) findViewById(R.id.myspinner);
+         spinner2 = (Spinner) findViewById(R.id.myspinner2);
+        villages.add("");
+     retrievevillage();
+
+
+
+//// Application of the Array to the Spinner
+        spinnerArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,villages);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(spinnerArrayAdapter);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onClick(View v) {
-                    Log.d("kkkkkkkkkkkk",""+villages);
-                    Log.d("cccccccc",""+clients);
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 village=parent.getSelectedItem().toString();
+                    clients.clear();
+                    clients.add("");
+                    retrieveclient(village);
+                    spinerclient();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
                 }
             });
 
 
-
-
-
-//
-//// Application of the Array to the Spinner
-      ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, villages);
-       spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-        spinner.setAdapter(spinnerArrayAdapter);
-
-//        String sss=spinner.getSelectedItem().toString();
     }
-
-
-    //
 //    void add(){
 //
 //        nameofvilaage.put("numberofjara",7);
@@ -105,14 +111,6 @@ public class MainActivity extends AppCompatActivity {
 //
 //                     }
 
-
-
-
-
-
-
-
-
 void retrievevillage(){
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     final Task<QuerySnapshot> querySnapshotTask = db.collection("nameofvillage")
@@ -132,9 +130,9 @@ void retrievevillage(){
         }
     });
 }
-    void retrieveclient(){
+    void retrieveclient(String vl){
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final Task<QuerySnapshot> querySnapshotTask = db.collection("nameofclient").whereEqualTo("balda","mayfadoon")
+        final Task<QuerySnapshot> querySnapshotTask = db.collection("nameofclient").whereEqualTo("balda",vl)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -151,7 +149,22 @@ void retrievevillage(){
                     }
                 });
     }
+void spinerclient(){
+    spinnerArrayAdapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,clients);
+    spinnerArrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinner2.setAdapter(spinnerArrayAdapter2);
+    spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    });
+}
 
 
 }
