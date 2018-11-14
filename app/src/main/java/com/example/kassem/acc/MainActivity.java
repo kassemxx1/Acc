@@ -1,5 +1,6 @@
 package com.example.kassem.acc;
 
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -7,6 +8,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,6 +31,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.firestore.model.Document;
 import com.google.firestore.v1beta1.DocumentTransform;
 
@@ -46,8 +50,8 @@ import java.util.stream.IntStream;
 public class MainActivity extends AppCompatActivity {
 
 
-          List<String> villages;
-          ArrayList<String> clients;
+    List<String> villages;
+    ArrayList<String> clients;
     ArrayAdapter<String> spinnerArrayAdapter;
     ArrayAdapter<String> spinnerArrayAdapter2;
     String village;
@@ -57,11 +61,17 @@ public class MainActivity extends AppCompatActivity {
     String esm;
     TextView adress;
     TextView phone;
-
+   String clienttt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asd);
+        final Button sender =(Button)findViewById(R.id.send);
+        final EditText inputjara3adad=(EditText)findViewById(R.id.jaratmabi3);
+        final EditText inputjaratmortaja3=(EditText)findViewById(R.id.jaratmortaja3);
+        final EditText inputmabi3=(EditText)findViewById(R.id.mabi3);
+        final EditText inputden=(EditText)findViewById(R.id.dayn);
+        final EditText inputtaskirden=(EditText)findViewById(R.id.taskirden);
          name=(TextView)findViewById(R.id.nameofclient);
          adress=(TextView)findViewById(R.id.adress);
          phone=(TextView)findViewById(R.id.phonenumber);
@@ -72,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         villages.add("");
      retrievevillage();
 
-add();
+//add();
 
 //// Application of the Array to the Spinner
         spinnerArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,villages);
@@ -95,30 +105,76 @@ add();
 
                 }
             });
-
-
-    }
-    void add(){
-        Map<String, Object> transcationn = new HashMap<>();
-         transcationn.put("3adad eljarat",3);
-        transcationn.put("7a2 eljarat",3000);
-        transcationn.put("den",0);
-        transcationn.put("jarat mortaja3",2);
-        transcationn.put("nameofclient","ali jaber");
-        transcationn.put("taskir den",0);
-       // transcation.put("time",DocumentTransform.FieldTransform.ServerValue.REQUEST_TIME);
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        sender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String, Object> transcationn = new HashMap<>();
+                transcationn.put("3adad eljarat", Integer.parseInt(inputjara3adad.getText().toString()));
+                transcationn.put("7a2 eljarat", Integer.parseInt(inputmabi3.getText().toString()));
+                transcationn.put("den", Integer.parseInt(inputden.getText().toString()));
+                transcationn.put("jarat mortaja3", Integer.parseInt(inputjaratmortaja3.getText().toString()));
+                transcationn.put("nameofclient",client);
+                transcationn.put("taskir den", Integer.parseInt(inputtaskirden.getText().toString()));
+                transcationn.put("time",Timestamp.now());
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 db.collection("transaction").document()
                         .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
-                  @Override
+                    @Override
                     public void onSuccess(Void aVoid) {
+                        inputjara3adad.setText("");
+                        inputmabi3.setText("");
+                        inputden.setText("");
+                        inputjaratmortaja3.setText("");
+                        inputtaskirden.setText("");
+                        name.setText("");
+                        phone.setText("");
+                        adress.setText("");
+                    }
+                });
+            }
+        });
 
-                                   }
-                           });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-                     }
+        int id =item.getItemId();
+        if(id==R.id.takarir){
+            Intent aboutintet=new Intent(MainActivity.this,reports.class);
+            startActivity(aboutintet);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+//    void add(){
+//        Map<String, Object> transcationn = new HashMap<>();
+//         transcationn.put("3adad eljarat",1);
+//        transcationn.put("7a2 eljarat",2000);
+//        transcationn.put("den",0);
+//        transcationn.put("jarat mortaja3",1);
+//        transcationn.put("nameofclient","kassem abboud");
+//        transcationn.put("taskir den",0);
+//
+//        transcationn.put("time",Timestamp.now());
+//        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+//
+//                db.collection("transaction").document()
+//                        .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                  @Override
+//                    public void onSuccess(Void aVoid) {
+//
+//                                   }
+//                           });
+//
+//
+//                     }
 
 void retrievevillage(){
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -149,8 +205,8 @@ void retrievevillage(){
                         if (task.isSuccessful()){
 
                             for (DocumentSnapshot document :task.getResult()) {
-                                String clientttt = document.getData().get("name").toString();
-                                clients.add(clientttt);
+                                clienttt = document.getData().get("name").toString();
+                                clients.add(clienttt);
                             }
 
 
