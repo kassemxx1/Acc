@@ -109,12 +109,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Map<String, Object> transcationn = new HashMap<>();
-                transcationn.put("3adad eljarat", Integer.parseInt(inputjara3adad.getText().toString()));
-                transcationn.put("7a2 eljarat", Integer.parseInt(inputmabi3.getText().toString()));
-                transcationn.put("den", Integer.parseInt(inputden.getText().toString()));
-                transcationn.put("jarat mortaja3", Integer.parseInt(inputjaratmortaja3.getText().toString()));
+                transcationn.put("3adad eljarat", inputjara3adad.getText().toString());
+                transcationn.put("7a2 eljarat", inputmabi3.getText().toString());
+                transcationn.put("den", inputden.getText().toString());
+                transcationn.put("jarat mortaja3", inputjaratmortaja3.getText().toString());
                 transcationn.put("nameofclient",client);
-                transcationn.put("taskir den", Integer.parseInt(inputtaskirden.getText().toString()));
+                transcationn.put("taskir den", inputtaskirden.getText().toString());
                 transcationn.put("time",Timestamp.now());
                 final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
