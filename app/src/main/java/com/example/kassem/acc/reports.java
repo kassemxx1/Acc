@@ -28,14 +28,20 @@ public class reports extends AppCompatActivity {
     private Calendar mcalendar;
     private int day, month, year;
     ArrayList<String> sumofjarat = new ArrayList<>();
+    ArrayList<String> mabla8 = new ArrayList<>();
+    ArrayList<String> tskirden = new ArrayList<>();
     int sum=0;
+    int summabla8;
+    int sumden;
     TextView showreport;
+    TextView showmabla8;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
         getreport = (Button) findViewById(R.id.getdailyrepot);
-       showreport = (TextView)findViewById(R.id.sumofjarattt);
+       showreport = (TextView)findViewById(R.id.textView);
+        showmabla8 = (TextView)findViewById(R.id.textView2);
         datee = (EditText) findViewById(R.id.inputdate);
 
 
@@ -49,6 +55,9 @@ public class reports extends AppCompatActivity {
                 String str = datee.getText().toString();
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 sum = 0;
+                summabla8=0;
+                sumden=0;
+
                 Date date = new Date();
                 try {
                     date = formatter.parse(str);
@@ -70,12 +79,17 @@ public class reports extends AppCompatActivity {
                 date2.setHours(24);
 //                if (sumofjarat.size()>0){
 //                sumofjarat.clear();}
-             sumofjaratt();
-                Log.d("datedatedate", "" + sumofjarat);
                 retrivesum(date,date2);
-                Log.d("asdaasdasd", "" + sum);
+             sumofjaratt();
+            sumofmabla8();
+            sumofden();
+                Log.d("datedatedate", "" + tskirden);
 
-//                showreport.setText(sum);
+                Log.d("asdaasdasd", "" + sumden);
+
+
+                showreport.setText(" مجموع الجرات المباعة: "+sum);
+                showmabla8.setText("مجموع المبلغ :"+(sumden+summabla8) );
             }
         });
 
@@ -93,13 +107,18 @@ public class reports extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             if (sumofjarat.size() > 0) {
                                 sumofjarat.clear();
+                                mabla8.clear();
+                                tskirden.clear();
                             }
 
                             for (DocumentSnapshot document : task.getResult()) {
 
                                 String i = (String) document.getData().get("3adad eljarat");
                                 sumofjarat.add(i);
-
+                                String j = (String) document.getData().get("7a2 eljarat");
+                                mabla8.add(j);
+                                String t = (String) document.getData().get("taskir den");
+                                tskirden.add(t);
                             }
 
 
@@ -118,6 +137,25 @@ public class reports extends AppCompatActivity {
             sum += j;}
             return sum;
         }
+    Integer sumofmabla8() {
+
+        for (int number = 0; number < mabla8.size(); number++) {
+
+            int j = Integer.parseInt(mabla8.get(number));
+
+            summabla8 += j;}
+        return summabla8;
+    }
+    Integer sumofden() {
+
+        for (int number = 0; number < tskirden.size(); number++) {
+
+            int j = Integer.parseInt(tskirden.get(number));
+
+            sumden += j;}
+        return sumden;
+    }
+
 
 
 }
