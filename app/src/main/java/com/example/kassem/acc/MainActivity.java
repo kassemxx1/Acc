@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         summ = (TextView)findViewById(R.id.sum);
         villages = new ArrayList<>();
         clients = new ArrayList<>();
-        Spinner spinner = (Spinner) findViewById(R.id.myspinner);
+        final Spinner spinner = (Spinner) findViewById(R.id.myspinner);
         spinner2 = (Spinner) findViewById(R.id.myspinner2);
         outin = (TextView) findViewById(R.id.inout);
         villages.add("");
@@ -143,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                         name.setText("");
                         phone.setText("");
                         adress.setText("");
+                        spinner.setSelection(0);
+                        spinner2.setSelection(0);
                     }
                 });
             }
@@ -241,10 +243,8 @@ public class MainActivity extends AppCompatActivity {
                 client = parent.getSelectedItem().toString();
 
                 retriveinformation(village, client);
+                retrivesum(client);
 
-
-                summ.setText("الدين المتوجب عليه :"+(sumden-sumtskirden));
-                outin.setText("الجرات الفارغة الموجودة"+(sumin-sumout));
             }
 
             @Override
@@ -263,12 +263,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
 
-                            retrivesum(client);
-                            sumofden();
-                            sumoftskirden();
-                            ininin();
-                            outoutout();
-
                             for (DocumentSnapshot document : task.getResult()) {
                                 esm = document.getData().get("name").toString();
                                 name.setText(esm);
@@ -285,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+
     }
 
     void retrivesum(String cliennnt) {
@@ -296,20 +291,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            if (den.size() > 0) {
+                            if(den.size()>0){
                                 den.clear();
-
                             }
-
-                            if (tskirden.size()>0){
+                            if(tskirden.size()>0){
                                 tskirden.clear();
                             }
-                            if (inin.size() > 0) {
+                            if(inin.size()>0){
                                 inin.clear();
-
                             }
-
-                            if (outout.size()>0){
+                            if(outout.size()>0){
                                 outout.clear();
                             }
 
@@ -328,6 +319,15 @@ public class MainActivity extends AppCompatActivity {
 
 
                         }
+                        sumofden();
+                        sumoftskirden();
+                        ininin();
+                        outoutout();
+                        Log.d("ssss",""+den);
+
+
+                        summ.setText("الدين المتوجب عليه :"+(sumden-sumtskirden));
+                        outin.setText("الجرات الفارغة الموجودة"+(sumin-sumout));
                     }
                 });
 

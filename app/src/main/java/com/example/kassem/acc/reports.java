@@ -80,16 +80,14 @@ public class reports extends AppCompatActivity {
 //                if (sumofjarat.size()>0){
 //                sumofjarat.clear();}
                 retrivesum(date,date2);
-             sumofjaratt();
-            sumofmabla8();
-            sumofden();
+
+
                 Log.d("datedatedate", "" + tskirden);
 
                 Log.d("asdaasdasd", "" + sumden);
 
 
-                showreport.setText(" مجموع الجرات المباعة: "+sum);
-                showmabla8.setText("مجموع المبلغ :"+(sumden+summabla8) );
+
             }
         });
 
@@ -121,7 +119,11 @@ public class reports extends AppCompatActivity {
                                 tskirden.add(t);
                             }
 
-
+                            sumofjaratt();
+                            sumofmabla8();
+                            sumofden();
+                            showreport.setText(" مجموع الجرات المباعة: "+sum);
+                            showmabla8.setText("مجموع المبلغ :"+(sumden+summabla8) );
                         }
                     }
                 });
