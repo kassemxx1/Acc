@@ -33,6 +33,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/datestart"
+            android:inputType="date"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/dateend"
+            android:inputType="date"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/generalreport"
+            android:text="تفرير عام"/>
+        <TextView
+            android:id="@+id/allammount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"/>
+        <TextView
+            android:id="@+id/allden"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"/>
+        <TextView
+            android:id="@+id/alljarat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"/>
+        <TextView
+            android:id="@+id/allfare8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"/>
 
     </LinearLayout>
 

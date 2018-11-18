@@ -24,12 +24,27 @@ import java.util.Date;
 public class reports extends AppCompatActivity {
     EditText datee;
     Button getreport;
+    EditText startdate;
+    EditText enddate;
+    Button reportgeneral;
 
     private Calendar mcalendar;
     private int day, month, year;
     ArrayList<String> sumofjarat = new ArrayList<>();
     ArrayList<String> mabla8 = new ArrayList<>();
     ArrayList<String> tskirden = new ArrayList<>();
+    ArrayList<String> generaljarat = new ArrayList<>();
+    ArrayList<String> generalmabla8 = new ArrayList<>();
+    ArrayList<String> generalmorataja3 = new ArrayList<>();
+    ArrayList<String> generalden = new ArrayList<>();
+    TextView ogeneralmabla8;
+    TextView ogeneralmorataja3;
+    TextView ogeneralden;
+    TextView ogeneraljarat;
+    int gsumjarat;
+    int gsummabla8;
+    int gsumden;
+    int gsummortaja3;
     int sum=0;
     int summabla8;
     int sumden;
@@ -43,8 +58,15 @@ public class reports extends AppCompatActivity {
        showreport = (TextView)findViewById(R.id.textView);
         showmabla8 = (TextView)findViewById(R.id.textView2);
         datee = (EditText) findViewById(R.id.inputdate);
+        startdate=(EditText)findViewById(R.id.datestart);
+        enddate=(EditText)findViewById(R.id.dateend);
+        reportgeneral=(Button)findViewById(R.id.generalreport);
+        ogeneralden=(TextView)findViewById(R.id.allden);
+        ogeneraljarat=(TextView)findViewById(R.id.alljarat);
+        ogeneralmabla8=(TextView)findViewById(R.id.allammount);
+        ogeneralmorataja3=(TextView)findViewById(R.id.allfare8);
 
-
+/////////////////////////////////////////////////////////////////
         getreport.setOnClickListener(new View.OnClickListener()
 
         {
@@ -87,6 +109,40 @@ public class reports extends AppCompatActivity {
                 Log.d("asdaasdasd", "" + sumden);
 
 
+
+            }
+        });
+        /////////////////////////////////////////
+        reportgeneral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gsumden=0;
+                gsumjarat=0;
+                gsummabla8=0;
+                gsummortaja3=0;
+                String star = startdate.getText().toString();
+                String end = enddate.getText().toString();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date datestart = new Date();
+                Date dateends=new Date();
+                try {
+                    datestart = formatter.parse(star);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    dateends = formatter.parse(end);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                datestart.setHours(0);
+                datestart.setMinutes(0);
+                datestart.setSeconds(0);
+                dateends.setHours(23);
+                dateends.setMinutes(59);
+                dateends.setSeconds(59);
+
+                retrivegeneral(datestart,dateends);
 
             }
         });
@@ -148,6 +204,42 @@ public class reports extends AppCompatActivity {
             summabla8 += j;}
         return summabla8;
     }
+    Integer sumofgden() {
+
+        for (int number = 0; number < generalden.size(); number++) {
+
+            int j = Integer.parseInt(generalden.get(number));
+
+            gsumden += j;}
+        return gsumden;
+    }
+    Integer sumofgmabla8() {
+
+        for (int number = 0; number < generalmabla8.size(); number++) {
+
+            int j = Integer.parseInt(generalmabla8.get(number));
+
+            gsummabla8 += j;}
+        return gsummabla8;
+    }
+    Integer sumofgjarat() {
+
+        for (int number = 0; number < generaljarat.size(); number++) {
+
+            int j = Integer.parseInt(generaljarat.get(number));
+
+            gsumjarat += j;}
+        return gsumjarat;
+    }
+    Integer sumofgmortaja3() {
+
+        for (int number = 0; number < generalmorataja3.size(); number++) {
+
+            int j = Integer.parseInt(generalmorataja3.get(number));
+
+            gsummortaja3 += j;}
+        return gsummortaja3;
+    }
     Integer sumofden() {
 
         for (int number = 0; number < tskirden.size(); number++) {
@@ -158,6 +250,49 @@ public class reports extends AppCompatActivity {
         return sumden;
     }
 
+
+    void retrivegeneral(Date date1,Date date2) {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        final Task<QuerySnapshot> querySnapshotTask = db.collection("transaction").whereGreaterThan("time", date1).whereLessThan("time",date2)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            generalmabla8.clear();
+                                generaljarat.clear();
+                                generalden.clear();
+                                generalmorataja3.clear();
+
+
+                            for (DocumentSnapshot document : task.getResult()) {
+
+                                String i = (String) document.getData().get("3adad eljarat");
+                                generaljarat.add(i);
+                                String j = (String) document.getData().get("7a2 eljarat");
+                                generalmabla8.add(j);
+                                String t = (String) document.getData().get("taskir den");
+                                generalmabla8.add(t);
+                                String d = (String) document.getData().get("den");
+                                generalden.add(d);
+                                String m = (String) document.getData().get("jarat mortaja3");
+                                generalmorataja3.add(m);
+                            }
+
+                            sumofgden();
+                            sumofgjarat();
+                            sumofgmabla8();
+                            sumofgmortaja3();
+                            ogeneralden.setText("مجموع الدين:"+gsumden);
+                            ogeneraljarat.setText("مجموع الجرات المباعة:"+gsumjarat);
+                            ogeneralmabla8.setText("مجموع المبلغ: "+gsummabla8);
+                            ogeneralmorataja3.setText("مجموع الجرات الموجودة عتد الزبائن:"+gsummortaja3);
+                        }
+                    }
+                });
+
+    }
 
 
 }
