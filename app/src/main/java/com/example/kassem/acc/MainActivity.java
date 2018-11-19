@@ -40,6 +40,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -66,22 +67,42 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> tskirden = new ArrayList<>();
     ArrayList<String> inin = new ArrayList<>();
     ArrayList<String> outout = new ArrayList<>();
+    ArrayList<String> sumofjarat=new ArrayList<>();
+    ArrayList<String> mabla8 = new ArrayList<>();
+    ArrayList<String> tskirdene = new ArrayList<>();
     int sumden;
     int sumtskirden;
     int sumin;
     int sumout;
     TextView summ;
     TextView outin;
+    String email="zaher";
+    int sum=0;
+    int summabla8,sumoftskir;
+    TextView jaratemail,mabla8email;
+    Date today,tomorow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asd);
         final Button sender = (Button) findViewById(R.id.send);
+        today=Calendar.getInstance().getTime();
+        today.setHours(0);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        tomorow=Calendar.getInstance().getTime();
+        tomorow.setHours(23);
+        tomorow.setMinutes(59);
+        tomorow.setSeconds(59);
+
+
         final EditText inputjara3adad = (EditText) findViewById(R.id.jaratmabi3);
         final EditText inputjaratmortaja3 = (EditText) findViewById(R.id.jaratmortaja3);
         final EditText inputmabi3 = (EditText) findViewById(R.id.mabi3);
         final EditText inputden = (EditText) findViewById(R.id.dayn);
         final EditText inputtaskirden = (EditText) findViewById(R.id.taskirden);
+        jaratemail =(TextView)findViewById(R.id.emeiljarat);
+        mabla8email=(TextView)findViewById(R.id.emailmabla8);
         name = (TextView) findViewById(R.id.nameofclient);
         adress = (TextView) findViewById(R.id.adress);
         phone = (TextView) findViewById(R.id.phonenumber);
@@ -93,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
         outin = (TextView) findViewById(R.id.inout);
         villages.add("");
         retrievevillage();
-
+        retrivesumemail(today,tomorow,email);
+//        retrivesumemail(today,tomorow,email);
 //add();
 
 //// Application of the Array to the Spinner
@@ -121,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         sender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                retrivesumemail(today,tomorow,email);
                 Map<String, Object> transcationn = new HashMap<>();
                 transcationn.put("3adad eljarat", inputjara3adad.getText().toString());
                 transcationn.put("7a2 eljarat", inputmabi3.getText().toString());
@@ -129,7 +152,12 @@ public class MainActivity extends AppCompatActivity {
                 transcationn.put("nameofclient", client);
                 transcationn.put("taskir den", inputtaskirden.getText().toString());
                 transcationn.put("time", Timestamp.now());
+                transcationn.put("email",email);
                 final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+
+
 
                 db.collection("transaction").document()
                         .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -145,9 +173,12 @@ public class MainActivity extends AppCompatActivity {
                         adress.setText("");
                         spinner.setSelection(0);
                         spinner2.setSelection(0);
+                    retrivesumemail(today,tomorow,email);
                     }
                 });
+
             }
+
         });
 
     }
@@ -368,5 +399,72 @@ sumden=0;
 
             sumout += j;}
         return sumout;
+    }
+    Integer sumofjaratt() {
+sum=0;
+        for (int number = 0; number < sumofjarat.size(); number++) {
+
+            int j = Integer.parseInt(sumofjarat.get(number));
+
+            sum += j;}
+        return sum;
+    }
+    Integer sumofmabla8() {
+summabla8=0;
+        for (int number = 0; number < mabla8.size(); number++) {
+
+            int j = Integer.parseInt(mabla8.get(number));
+
+            summabla8 += j;}
+        return summabla8;
+    }
+    Integer sumoftskirr() {
+        sumoftskir=0;
+        for (int number = 0; number < tskirdene.size(); number++) {
+
+            int j = Integer.parseInt(tskirdene.get(number));
+
+            sumoftskir += j;}
+        return sumoftskir;
+    }
+
+    ////////////////////////////////
+    void retrivesumemail(final Date date1, final Date date2, String seller) {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        final Task<QuerySnapshot> querySnapshotTask = db.collection("transaction").whereEqualTo("email",seller)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                                sumofjarat.clear();
+                                mabla8.clear();
+                                tskirdene.clear();
+
+
+                            for (DocumentSnapshot document : task.getResult()) {
+                                Date d=(Date) document.getData().get("time");
+                                if(d.after(date1))  {
+                                String i = (String) document.getData().get("3adad eljarat");
+                                sumofjarat.add(i);
+                                String j = (String) document.getData().get("7a2 eljarat");
+                                mabla8.add(j);
+                                String t = (String) document.getData().get("taskir den");
+                                tskirdene.add(t);}
+                            }
+
+                            sumofjaratt();
+                            sumofmabla8();
+                            sumofden();
+                            sumoftskirr();
+                            Log.d("pppppppppppp",""+sum);
+                            jaratemail.setText(" مجموع الجرات المباعة: "+sum);
+                            mabla8email.setText("مجموع المبلغ :"+(summabla8+sumoftskir));
+                        }
+                    }
+                });
+
     }
 }
