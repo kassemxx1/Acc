@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:text="تقرير يومي"/>
 
+
         <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -33,6 +34,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30dp"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sellerspinner"></Spinner>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="40dp"

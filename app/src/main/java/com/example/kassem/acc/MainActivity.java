@@ -70,116 +70,119 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> sumofjarat=new ArrayList<>();
     ArrayList<String> mabla8 = new ArrayList<>();
     ArrayList<String> tskirdene = new ArrayList<>();
+    ArrayList<String> sellers=new ArrayList<>();
     int sumden;
     int sumtskirden;
     int sumin;
     int sumout;
     TextView summ;
     TextView outin;
-    String email="zaher";
+
     int sum=0;
     int summabla8,sumoftskir;
     TextView jaratemail,mabla8email;
     Date today,tomorow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.asd);
-        final Button sender = (Button) findViewById(R.id.send);
-        today=Calendar.getInstance().getTime();
-        today.setHours(0);
-        today.setMinutes(0);
-        today.setSeconds(0);
-        tomorow=Calendar.getInstance().getTime();
-        tomorow.setHours(23);
-        tomorow.setMinutes(59);
-        tomorow.setSeconds(59);
+       final String email="kassem";
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.asd);
+            final Button sender = (Button) findViewById(R.id.send);
 
+            today = Calendar.getInstance().getTime();
+            today.setHours(0);
+            today.setMinutes(0);
+            today.setSeconds(0);
+            tomorow = Calendar.getInstance().getTime();
+            tomorow.setHours(23);
+            tomorow.setMinutes(59);
+            tomorow.setSeconds(59);
+            final EditText inputjara3adad = (EditText) findViewById(R.id.jaratmabi3);
+            final EditText inputjaratmortaja3 = (EditText) findViewById(R.id.jaratmortaja3);
+            final EditText inputmabi3 = (EditText) findViewById(R.id.mabi3);
+            final EditText inputden = (EditText) findViewById(R.id.dayn);
+            final EditText inputtaskirden = (EditText) findViewById(R.id.taskirden);
+            jaratemail = (TextView) findViewById(R.id.emeiljarat);
+            mabla8email = (TextView) findViewById(R.id.emailmabla8);
+            name = (TextView) findViewById(R.id.nameofclient);
+            adress = (TextView) findViewById(R.id.adress);
+            phone = (TextView) findViewById(R.id.phonenumber);
+            summ = (TextView) findViewById(R.id.sum);
+            villages = new ArrayList<>();
+            clients = new ArrayList<>();
+            final Spinner spinner = (Spinner) findViewById(R.id.myspinner);
+            spinner2 = (Spinner) findViewById(R.id.myspinner2);
+            outin = (TextView) findViewById(R.id.inout);
+            villages.add("");
+        retriveSellers();
 
-        final EditText inputjara3adad = (EditText) findViewById(R.id.jaratmabi3);
-        final EditText inputjaratmortaja3 = (EditText) findViewById(R.id.jaratmortaja3);
-        final EditText inputmabi3 = (EditText) findViewById(R.id.mabi3);
-        final EditText inputden = (EditText) findViewById(R.id.dayn);
-        final EditText inputtaskirden = (EditText) findViewById(R.id.taskirden);
-        jaratemail =(TextView)findViewById(R.id.emeiljarat);
-        mabla8email=(TextView)findViewById(R.id.emailmabla8);
-        name = (TextView) findViewById(R.id.nameofclient);
-        adress = (TextView) findViewById(R.id.adress);
-        phone = (TextView) findViewById(R.id.phonenumber);
-        summ = (TextView)findViewById(R.id.sum);
-        villages = new ArrayList<>();
-        clients = new ArrayList<>();
-        final Spinner spinner = (Spinner) findViewById(R.id.myspinner);
-        spinner2 = (Spinner) findViewById(R.id.myspinner2);
-        outin = (TextView) findViewById(R.id.inout);
-        villages.add("");
-        retrievevillage();
-        retrivesumemail(today,tomorow,email);
+            retrievevillage();
+            retrivesumemail(today, tomorow, email);
 //        retrivesumemail(today,tomorow,email);
 //add();
 
 //// Application of the Array to the Spinner
-        spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, villages);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerArrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                village = parent.getSelectedItem().toString();
-                clients.clear();
-                clients.add("");
+            spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, villages);
+            spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(spinnerArrayAdapter);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    village = parent.getSelectedItem().toString();
+                    clients.clear();
+                    clients.add("");
 
-                retrieveclient(village);
-                spinerclient();
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        sender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                retrivesumemail(today,tomorow,email);
-                Map<String, Object> transcationn = new HashMap<>();
-                transcationn.put("3adad eljarat", inputjara3adad.getText().toString());
-                transcationn.put("7a2 eljarat", inputmabi3.getText().toString());
-                transcationn.put("den", inputden.getText().toString());
-                transcationn.put("jarat mortaja3", inputjaratmortaja3.getText().toString());
-                transcationn.put("nameofclient", client);
-                transcationn.put("taskir den", inputtaskirden.getText().toString());
-                transcationn.put("time", Timestamp.now());
-                transcationn.put("email",email);
-                final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    retrieveclient(village);
+                    spinerclient();
 
 
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            sender.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    retrivesumemail(today, tomorow, email);
+                    Map<String, Object> transcationn = new HashMap<>();
+                    transcationn.put("3adad eljarat", inputjara3adad.getText().toString());
+                    transcationn.put("7a2 eljarat", inputmabi3.getText().toString());
+                    transcationn.put("den", inputden.getText().toString());
+                    transcationn.put("jarat mortaja3", inputjaratmortaja3.getText().toString());
+                    transcationn.put("nameofclient", client);
+                    transcationn.put("taskir den", inputtaskirden.getText().toString());
+                    transcationn.put("time", Timestamp.now());
+                    transcationn.put("email", email);
+                    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
+                    db.collection("transaction").document()
+                            .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            inputjara3adad.setText("");
+                            inputmabi3.setText("");
+                            inputden.setText("");
+                            inputjaratmortaja3.setText("");
+                            inputtaskirden.setText("");
+                            name.setText("");
+                            phone.setText("");
+                            adress.setText("");
+                            spinner.setSelection(0);
+                            spinner2.setSelection(0);
+                            retrivesumemail(today, tomorow, email);
+                        }
+                    });
 
-                db.collection("transaction").document()
-                        .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        inputjara3adad.setText("");
-                        inputmabi3.setText("");
-                        inputden.setText("");
-                        inputjaratmortaja3.setText("");
-                        inputtaskirden.setText("");
-                        name.setText("");
-                        phone.setText("");
-                        adress.setText("");
-                        spinner.setSelection(0);
-                        spinner2.setSelection(0);
-                    retrivesumemail(today,tomorow,email);
-                    }
-                });
+                }
 
-            }
+            });
 
-        });
+
 
     }
 
@@ -423,7 +426,6 @@ summabla8=0;
         for (int number = 0; number < tskirdene.size(); number++) {
 
             int j = Integer.parseInt(tskirdene.get(number));
-
             sumoftskir += j;}
         return sumoftskir;
     }
@@ -467,4 +469,29 @@ summabla8=0;
                 });
 
     }
+    void retriveSellers() {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        final Task<QuerySnapshot> querySnapshotTask = db.collection("seller")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        sellers.clear();
+                        sellers.add("all");
+
+
+                        for (DocumentSnapshot document : task.getResult()) {
+
+                            String seler = (String) document.getData().get("seller");
+                            sellers.add(seler);
+                            Log.d("aaaaaaaaa",""+sellers);
+                        }
+
+                    }
+                });
+
+    }
+
 }
