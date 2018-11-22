@@ -121,7 +121,7 @@ public class reports extends AppCompatActivity {
                                  }
                     else {
                     sellerr = parent.getSelectedItem().toString();
-
+                    Log.d("bbbbbbbbb",""+sellerr);
                     reportgeneral.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -151,7 +151,7 @@ public class reports extends AppCompatActivity {
                             dateends.setMinutes(59);
                             dateends.setSeconds(59);
 
-                            retrivegeneralwithseller(datestart, dateends, sellerr);
+                           retrivegeneralwithseller(datestart,dateends,sellerr);
 
                         }
                     });
@@ -368,7 +368,7 @@ public class reports extends AppCompatActivity {
                             ogeneralden.setText("مجموع الدين:" + gsumden);
                             ogeneraljarat.setText("مجموع الجرات المباعة:" + gsumjarat);
                             ogeneralmabla8.setText("مجموع المبلغ: " + gsummabla8);
-                            ogeneralmorataja3.setText("مجموع الجرات الموجودة عتد الزبائن:" + gsummortaja3);
+                            ogeneralmorataja3.setText("مجموع الجرات الفارغة:" + gsummortaja3);
                         }
                     }
                 });
@@ -400,10 +400,10 @@ public class reports extends AppCompatActivity {
 
     }
 
-    void retrivegeneralwithseller(final Date date1, final Date date2, String seller) {
+    void retrivegeneralwithseller(final Date date1, final Date date2, final String seller) {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        final Task<QuerySnapshot> querySnapshotTask = db.collection("transaction").whereEqualTo("email", seller)
+        final Task<QuerySnapshot> querySnapshotTask = db.collection("transaction").whereGreaterThan("time",date1).whereLessThan("time",date2)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -416,10 +416,10 @@ public class reports extends AppCompatActivity {
 
 
                             for (DocumentSnapshot document : task.getResult()) {
-                                Date time=(Time) document.getData().get("time");
-
-                                if(time.after(date1)) {
-                                    if (time.before(date2)) {
+//                                Date time=(Time) document.getData().get("time");
+                                String e = (String) document.getData().get("email");
+                                    Log.d("aaaaaaa",""+e);
+                                    if (e.equals(seller)) {
                                         String i = (String) document.getData().get("3adad eljarat");
                                         generaljarat.add(i);
                                         String j = (String) document.getData().get("7a2 eljarat");
@@ -431,7 +431,7 @@ public class reports extends AppCompatActivity {
                                         String m = (String) document.getData().get("jarat mortaja3");
                                         generalmorataja3.add(m);
                                     }
-                                }
+
                             }
 
                             sumofgden();
@@ -441,13 +441,14 @@ public class reports extends AppCompatActivity {
                             ogeneralden.setText("مجموع الدين:" + gsumden);
                             ogeneraljarat.setText("مجموع الجرات المباعة:" + gsumjarat);
                             ogeneralmabla8.setText("مجموع المبلغ: " + gsummabla8);
-                            ogeneralmorataja3.setText("مجموع الجرات الموجودة عتد الزبائن:" + gsummortaja3);
+                            ogeneralmorataja3.setText("مجموع الجرات الفارغة:" + gsummortaja3);
                         }
                     }
                 });
 
 
     }
+
 }
 
 

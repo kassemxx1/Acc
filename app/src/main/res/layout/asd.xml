@@ -178,14 +178,28 @@
             android:id="@+id/emeiljarat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+             />
 
         <TextView
             android:id="@+id/emailmabla8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
-
+           />
+        <TextView
+            android:id="@+id/emailmortaja3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/newclient"
+            android:text="زبون جديد"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/daletebutton"
+            android:text="حذف قيدية "/>
     </LinearLayout>
 
 

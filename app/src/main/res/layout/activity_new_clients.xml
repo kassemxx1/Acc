@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewClients">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/newspinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></Spinner>
+
+        <EditText
+            android:id="@+id/newname"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="اسم الزبون الجديد" />
+
+        <EditText
+            android:id="@+id/newadress"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="عنوان الزبون الجديد" />
+
+        <EditText
+            android:id="@+id/newphone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="رقم الهاتف" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/newsend"
+            android:text="ادخال"/>
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
