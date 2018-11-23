@@ -92,6 +92,14 @@ public class MainActivity extends AppCompatActivity {
             final Button sender = (Button) findViewById(R.id.send);
             final Button newzbon=(Button)findViewById(R.id.newclient);
         final Button delete=(Button)findViewById(R.id.daletebutton);
+        final Button ReportsClient=(Button)findViewById(R.id.ClientReport);
+        ReportsClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newintent=new Intent(MainActivity.this,ClientReports.class);
+                startActivity(newintent);
+            }
+        });
             today = Calendar.getInstance().getTime();
             today.setHours(0);
             today.setMinutes(0);

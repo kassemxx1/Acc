@@ -195,11 +195,27 @@
             android:layout_height="wrap_content"
             android:id="@+id/newclient"
             android:text="زبون جديد"/>
-        <Button
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/daletebutton"
-            android:text="حذف قيدية "/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/daletebutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="حذف قيدية " />
+
+            <Button
+                android:id="@+id/ClientReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="تقرير الزبون" />
+        </LinearLayout>
+
     </LinearLayout>
 
 

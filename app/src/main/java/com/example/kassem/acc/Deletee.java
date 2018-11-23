@@ -34,7 +34,7 @@ public class Deletee extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deletee);
-        final  Button ta2kid=(Button)findViewById(R.id.daletebutton);
+
         final ListView list = findViewById(R.id.listview);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         today = Calendar.getInstance().getTime();
@@ -80,28 +80,14 @@ public class Deletee extends AppCompatActivity {
                                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                                        startActivity(new Intent(Deletee.this,pop.class));
+                                        Bundle mybundle = new Bundle();
+                                        mybundle.putString("id", news.get(position).id);
+                                        Log.d("asaasas",news.get(position).id);
+                                        Intent myintet=new Intent(Deletee.this,pop.class);
+                                        myintet.putExtras(mybundle);
+                                        startActivity(myintet);
 
-                                        ta2kid.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                db.collection("transaction").document(news.get(position).id)
-                                                        .delete()
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void aVoid) {
-                                                                Log.d("123123", "DocumentSnapshot successfully deleted!");
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                Log.w("321321", "Error deleting document", e);
-                                                            }
-                                                        });
-                                                finish();
-                                            }
-                                        });
+
 
                                     }
                                 });

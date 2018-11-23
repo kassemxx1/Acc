@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".pop"
-          android:theme="@style/AppTheme.CustomTheme"  ></activity>
+        <activity
+            android:name=".pop"
+            android:theme="@style/AppTheme.CustomTheme" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +21,9 @@
         </activity>
         <activity android:name=".reports" />
         <activity android:name=".NewClients" />
-        <activity android:name=".Deletee"></activity>
+        <activity android:name=".Deletee" />
+        <activity android:name=".ClientReports" />
+        <activity android:name=".transaction"></activity>
     </application>
 
 </manifest>
