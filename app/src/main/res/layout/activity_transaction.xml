@@ -13,64 +13,57 @@
        >
 
         <TextView
-            android:id="@+id/esm"
+            android:id="@+id/timeeeeee"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="16dp"
-            android:textAlignment="center"/>
+            android:layout_height="40dp" />
 
         <TextView
             android:id="@+id/aydiya"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="16dp"
-            android:textAlignment="center"/>
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/esm"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/adad"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="16dp"
-            android:textAlignment="center"/>
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/mortaj3333"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="16dp"
-            android:textAlignment="center"/>
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/madfou3"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="16dp"
-            android:textAlignment="center"/>
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/dennn"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="16dp"
-            android:textAlignment="center"/>
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/tskrdenn"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="16dp"
-            android:textAlignment="center"/>
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/emailll"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="16dp"
-            android:textAlignment="center"/>
+            android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/timeeeeee"
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

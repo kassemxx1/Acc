@@ -23,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 public class ClientReports extends AppCompatActivity {
@@ -34,6 +35,7 @@ public class ClientReports extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_reports);
+        Collections.sort(clients, String.CASE_INSENSITIVE_ORDER);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final Spinner spinnerclient=(Spinner)findViewById(R.id.clientspinner);
         final ListView list = findViewById(R.id.clientList);
@@ -136,7 +138,7 @@ public class ClientReports extends AppCompatActivity {
                                 clients.add(clienttt);
                             }
 
-
+                            Collections.sort(clients, String.CASE_INSENSITIVE_ORDER);
                         }
                     }
                 });

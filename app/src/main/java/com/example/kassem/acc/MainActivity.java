@@ -79,14 +79,14 @@ public class MainActivity extends AppCompatActivity {
     int summortaja3;
     TextView summ;
     TextView outin;
-
+    final String email="zaher";
     int sum=0;
     int summabla8,sumoftskir;
     TextView jaratemail,mabla8email,mortaja3email;
     Date today,tomorow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       final String email="zaher";
+
             super.onCreate(savedInstanceState);
             setContentView(R.layout.asd);
             final Button sender = (Button) findViewById(R.id.send);
@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(newintent);
             }
         });
+
             today = Calendar.getInstance().getTime();
             today.setHours(0);
             today.setMinutes(0);
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             spinner2 = (Spinner) findViewById(R.id.myspinner2);
             outin = (TextView) findViewById(R.id.inout);
             villages.add("");
-           retriveSellers();
+              retriveSellers();
 
             retrievevillage();
             retrivesumemail(today, tomorow, email);
@@ -168,69 +169,68 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            sender.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    retrivesumemail(today, tomorow, email);
-                    Map<String, Object> transcationn = new HashMap<>();
-                    if (inputjara3adad.getText().toString().equals("")){
-                        transcationn.put("3adad eljarat", "0");
-                    }
-                     else {
-                        transcationn.put("3adad eljarat", inputjara3adad.getText().toString());
-                    }
-                    if (inputmabi3.getText().toString().equals("")){
-                        transcationn.put("7a2 eljarat", "0");
-                    }
-                    else {
-                        transcationn.put("7a2 eljarat", inputmabi3.getText().toString());
-                    }
-                    if (inputden.getText().toString().equals("")){
-                        transcationn.put("den", "0");
-                    }
-                    else {
-                        transcationn.put("den", inputden.getText().toString());
-                    }
-                    if (inputjaratmortaja3.getText().toString().equals("")){
-                        transcationn.put("jarat mortaja3","0");
-                    }
-                    else {
-                        transcationn.put("jarat mortaja3", inputjaratmortaja3.getText().toString());
-                    }
-                    if (inputtaskirden.getText().toString().equals("")){
-                        transcationn.put("taskir den", "0");
-                    }
-                    else {
-                        transcationn.put("taskir den", inputtaskirden.getText().toString());
-                    }
+                sender.setOnClickListener(new View.OnClickListener() {
 
-                    transcationn.put("nameofclient", client);
-                    transcationn.put("time", Timestamp.now());
-                    transcationn.put("email", email);
-                    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    @Override
+                    public void onClick(View v) {
 
-
-                    db.collection("transaction").document()
-                            .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            inputjara3adad.setText("");
-                            inputmabi3.setText("");
-                            inputden.setText("");
-                            inputjaratmortaja3.setText("");
-                            inputtaskirden.setText("");
-                            name.setText("");
-                            phone.setText("");
-                            adress.setText("");
-                            spinner.setSelection(0);
-                            spinner2.setSelection(0);
-                            retrivesumemail(today, tomorow, email);
+                        Log.d("eeeeeeeee",""+sellers);
+                        if(sellers.contains(email)) {
+                        retrivesumemail(today, tomorow, email);
+                        Map<String, Object> transcationn = new HashMap<>();
+                        if (inputjara3adad.getText().toString().equals("")) {
+                            transcationn.put("3adad eljarat", "0");
+                        } else {
+                            transcationn.put("3adad eljarat", inputjara3adad.getText().toString());
                         }
-                    });
+                        if (inputmabi3.getText().toString().equals("")) {
+                            transcationn.put("7a2 eljarat", "0");
+                        } else {
+                            transcationn.put("7a2 eljarat", inputmabi3.getText().toString());
+                        }
+                        if (inputden.getText().toString().equals("")) {
+                            transcationn.put("den", "0");
+                        } else {
+                            transcationn.put("den", inputden.getText().toString());
+                        }
+                        if (inputjaratmortaja3.getText().toString().equals("")) {
+                            transcationn.put("jarat mortaja3", "0");
+                        } else {
+                            transcationn.put("jarat mortaja3", inputjaratmortaja3.getText().toString());
+                        }
+                        if (inputtaskirden.getText().toString().equals("")) {
+                            transcationn.put("taskir den", "0");
+                        } else {
+                            transcationn.put("taskir den", inputtaskirden.getText().toString());
+                        }
 
-                }
+                        transcationn.put("nameofclient", client);
+                        transcationn.put("time", Timestamp.now());
+                        transcationn.put("email", email);
+                        final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            });
+
+                        db.collection("transaction").document()
+                                .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                inputjara3adad.setText("");
+                                inputmabi3.setText("");
+                                inputden.setText("");
+                                inputjaratmortaja3.setText("");
+                                inputtaskirden.setText("");
+                                name.setText("");
+                                phone.setText("");
+                                adress.setText("");
+                                spinner.setSelection(0);
+                                spinner2.setSelection(0);
+                                retrivesumemail(today, tomorow, email);
+                            }
+                        });
+                    }
+                    }
+
+                });
 
 
 
@@ -330,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
 
                 retriveinformation(village, client);
                 retrivesum(client);
-
+                retriveSellers();
             }
 
             @Override
@@ -542,13 +542,9 @@ summabla8=0;
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
                         sellers.clear();
                         sellers.add("all");
-
-
                         for (DocumentSnapshot document : task.getResult()) {
-
                             String seler = (String) document.getData().get("seller");
                             sellers.add(seler);
                             Log.d("aaaaaaaaa",""+sellers);

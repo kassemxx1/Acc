@@ -30,11 +30,12 @@ public class Deletee extends AppCompatActivity {
     ArrayList<CustomClass> news = new ArrayList<>();
     Date today,tomorow;
     String email="zaher";
+    ArrayList<String> sellers=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deletee);
-
+        retriveSellers();
         final ListView list = findViewById(R.id.listview);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         today = Calendar.getInstance().getTime();
@@ -72,25 +73,23 @@ public class Deletee extends AppCompatActivity {
                                 }
 
 
-
-
-
                                 baseadapter adapter = new baseadapter();
                                 list.setAdapter(adapter);
+                                if (sellers.contains(email)){
                                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                                         Bundle mybundle = new Bundle();
                                         mybundle.putString("id", news.get(position).id);
-                                        Log.d("asaasas",news.get(position).id);
-                                        Intent myintet=new Intent(Deletee.this,pop.class);
+                                        Log.d("asaasas", news.get(position).id);
+                                        Intent myintet = new Intent(Deletee.this, pop.class);
                                         myintet.putExtras(mybundle);
                                         startActivity(myintet);
 
 
-
                                     }
                                 });
+                            }
                             }
                         }
 
@@ -130,5 +129,25 @@ public class Deletee extends AppCompatActivity {
             return view;
 
         }
+    }
+    void retriveSellers() {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        final Task<QuerySnapshot> querySnapshotTask = db.collection("seller")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        sellers.clear();
+                        sellers.add("all");
+                        for (DocumentSnapshot document : task.getResult()) {
+                            String seler = (String) document.getData().get("seller");
+                            sellers.add(seler);
+                            Log.d("aaaaaaaaa",""+sellers);
+                        }
+
+                    }
+                });
+
     }
 }

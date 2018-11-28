@@ -4,6 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class transaction extends AppCompatActivity {
 
     @Override
@@ -34,15 +38,17 @@ public class transaction extends AppCompatActivity {
         final String  timeee=b.getString("time");
         final String  idd=b.getString("id");
         final String  dennn=b.getString("den");
-        kesm.setText(nameee);
-        kaydiye.setText(idd);
-        kadad.setText(adad);
-        kmortaja3.setText(mortaja333);
-        kmadfou3.setText(ha2);
-        kden.setText(dennn);
-        ktaskrdin.setText(taskirr);
-        kemail.setText(emaill);
-        ktime.setText(timeee);
+        String dateee;
+        dateee=timeee;
+        kesm.setText("اسم الزبون:   "+nameee);
+        kaydiye.setText("رقم القيدية:   "+idd);
+        kadad.setText("عدد الجرات المباعة:   "+adad);
+        kmortaja3.setText("عدد الجرات الفارغة المرتجعة:   "+mortaja333);
+        kmadfou3.setText("سعر الجرات المدفوع:   "+ha2);
+        kden.setText("الدين المتوجب عليه في هذا التاريخ:   "+dennn);
+        ktaskrdin.setText("الدين المدفوع في هذا التاريخ:   "+taskirr);
+        kemail.setText("اسم البائع:   "+emaill);
+        ktime.setText("تاريخ القيدية:   "+dateee);
 
 
 
