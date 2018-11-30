@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,7 +48,11 @@ public class Deletee extends AppCompatActivity {
         tomorow.setMinutes(59);
         tomorow.setSeconds(59);
 
-
+        final KProgressHUD hud = KProgressHUD.create(Deletee.this)
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("الرجاء الانتظار")
+                .setMaxProgress(100)
+                .show();
         final Task<QuerySnapshot> querySnapshotTask = db.collection("transaction").whereGreaterThan("time",today).whereLessThan("time",tomorow)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -91,6 +96,7 @@ public class Deletee extends AppCompatActivity {
                                 });
                             }
                             }
+                            hud.dismiss();
                         }
 
                     }

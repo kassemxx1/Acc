@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.firestore.model.Document;
 import com.google.firestore.v1beta1.DocumentTransform;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.sql.Array;
 import java.sql.Time;
@@ -208,7 +209,11 @@ public class MainActivity extends AppCompatActivity {
                         transcationn.put("time", Timestamp.now());
                         transcationn.put("email", email);
                         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+                            final KProgressHUD hud = KProgressHUD.create(MainActivity.this)
+                                    .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                                    .setLabel("الرجاء الانتظار")
+                                    .setMaxProgress(100)
+                                    .show();
 
                         db.collection("transaction").document()
                                 .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -227,13 +232,12 @@ public class MainActivity extends AppCompatActivity {
                                 retrivesumemail(today, tomorow, email);
                             }
                         });
+                        hud.dismiss();
                     }
                     }
 
                 });
-
-
-
+                
     }
 
     @Override
@@ -278,6 +282,11 @@ public class MainActivity extends AppCompatActivity {
 
     void retrievevillage() {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final KProgressHUD hud = KProgressHUD.create(MainActivity.this)
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("الرجاء الانتظار")
+                .setMaxProgress(100)
+                .show();
         final Task<QuerySnapshot> querySnapshotTask = db.collection("nameofvillage")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -296,10 +305,16 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+        hud.dismiss();
     }
 
     void retrieveclient(String vl) {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final KProgressHUD hud = KProgressHUD.create(MainActivity.this)
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("الرجاء الانتظار")
+                .setMaxProgress(100)
+                .show();
         final Task<QuerySnapshot> querySnapshotTask = db.collection("nameofclient").whereEqualTo("balda", vl)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -311,11 +326,12 @@ public class MainActivity extends AppCompatActivity {
                                 clienttt = document.getData().get("name").toString();
                                 clients.add(clienttt);
                             }
-
+                            hud.dismiss();
 
                         }
                     }
                 });
+
     }
 
     void spinerclient() {
