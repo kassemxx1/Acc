@@ -1,57 +1,39 @@
 package com.example.kassem.acc;
 
 import android.content.Intent;
-import android.database.DataSetObserver;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.ServerTimestamp;
-import com.google.firebase.firestore.model.Document;
-import com.google.firestore.v1beta1.DocumentTransform;
 import com.kaopiz.kprogresshud.KProgressHUD;
-
-import java.sql.Array;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SimpleTimeZone;
-import java.util.stream.IntStream;
+
 
 public class MainActivity extends AppCompatActivity {
 
 
+    final String email="zaher";
     List<String> villages;
     ArrayList<String> clients;
     ArrayAdapter<String> spinnerArrayAdapter;
@@ -80,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     int summortaja3;
     TextView summ;
     TextView outin;
-    final String email="zaher";
     int sum=0;
     int summabla8,sumoftskir;
     TextView jaratemail,mabla8email,mortaja3email;
@@ -237,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
-                
+
     }
 
     @Override
@@ -257,34 +238,13 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-//    void add(){
-//        Map<String, Object> transcationn = new HashMap<>();
-//         transcationn.put("3adad eljarat",1);
-//        transcationn.put("7a2 eljarat",2000);
-//        transcationn.put("den",0);
-//        transcationn.put("jarat mortaja3",1);
-//        transcationn.put("nameofclient","kassem abboud");
-//        transcationn.put("taskir den",0);
-//
-//        transcationn.put("time",Timestamp.now());
-//        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//                db.collection("transaction").document()
-//                        .set(transcationn).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                  @Override
-//                    public void onSuccess(Void aVoid) {
-//
-//                                   }
-//                           });
-//
-//
-//                     }
+
 
     void retrievevillage() {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final KProgressHUD hud = KProgressHUD.create(MainActivity.this)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
-                .setLabel("الرجاء الانتظار")
+                .setLabel("ZAWATER")
                 .setMaxProgress(100)
                 .show();
         final Task<QuerySnapshot> querySnapshotTask = db.collection("nameofvillage")
@@ -297,7 +257,6 @@ public class MainActivity extends AppCompatActivity {
                             for (DocumentSnapshot document : task.getResult()) {
                                 String villagee = document.getData().get("village").toString();
                                 String id=document.getId();
-                                Log.d("idididididi",""+id);
                                 villages.add(villagee);
                             }
 
@@ -312,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final KProgressHUD hud = KProgressHUD.create(MainActivity.this)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
-                .setLabel("الرجاء الانتظار")
+                .setLabel("ZAWATER")
                 .setMaxProgress(100)
                 .show();
         final Task<QuerySnapshot> querySnapshotTask = db.collection("nameofclient").whereEqualTo("balda", vl)
@@ -563,7 +522,6 @@ summabla8=0;
                         for (DocumentSnapshot document : task.getResult()) {
                             String seler = (String) document.getData().get("seller");
                             sellers.add(seler);
-                            Log.d("aaaaaaaaa",""+sellers);
                         }
 
                     }

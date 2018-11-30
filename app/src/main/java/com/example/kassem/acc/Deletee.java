@@ -50,7 +50,7 @@ public class Deletee extends AppCompatActivity {
 
         final KProgressHUD hud = KProgressHUD.create(Deletee.this)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
-                .setLabel("الرجاء الانتظار")
+                .setLabel("ZAWATER")
                 .setMaxProgress(100)
                 .show();
         final Task<QuerySnapshot> querySnapshotTask = db.collection("transaction").whereGreaterThan("time",today).whereLessThan("time",tomorow)
