@@ -33,7 +33,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
 
-    final String email="zaher";
+     String email;
     List<String> villages;
     ArrayList<String> clients;
     ArrayAdapter<String> spinnerArrayAdapter;
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.asd);
+            email=getIntent().getExtras().getString("emailll");
             final Button sender = (Button) findViewById(R.id.send);
             final Button newzbon=(Button)findViewById(R.id.newclient);
         final Button delete=(Button)findViewById(R.id.daletebutton);

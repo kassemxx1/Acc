@@ -12,7 +12,7 @@
         <activity
             android:name=".pop"
             android:theme="@style/AppTheme.CustomTheme" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +23,8 @@
         <activity android:name=".NewClients" />
         <activity android:name=".Deletee" />
         <activity android:name=".ClientReports" />
-        <activity android:name=".transaction"></activity>
+        <activity android:name=".transaction" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
