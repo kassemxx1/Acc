@@ -430,7 +430,7 @@ public class reports extends AppCompatActivity {
                                         generalden.add(g);
                                         String m = (String) document.getData().get("jarat mortaja3");
                                         generalmorataja3.add(m);
-                                    }
+                                   }
 
                             }
 

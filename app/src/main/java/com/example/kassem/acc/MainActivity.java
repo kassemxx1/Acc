@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         Log.d("eeeeeeeee",""+sellers);
-                        if(sellers.contains(email)) {
+
                         retrivesumemail(today, tomorow, email);
                         Map<String, Object> transcationn = new HashMap<>();
                         if (inputjara3adad.getText().toString().equals("")) {
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                         hud.dismiss();
-                    }
+
                     }
 
                 });
@@ -484,7 +484,7 @@ summabla8=0;
 
                                 mortaja3.clear();
                             for (DocumentSnapshot document : task.getResult()) {
-                                Date d=(Date) document.getData().get("time");
+                                Date d=(Date) document.getTimestamp("time").toDate();
                                 if(d.after(date1))  {
                                 String i = (String) document.getData().get("3adad eljarat");
                                 sumofjarat.add(i);
