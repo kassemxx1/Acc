@@ -3,4 +3,6 @@
 
     <item android:title="تقارير"
         android:id="@+id/takarir"></item>
+    <item android:title="SignOut"
+        android:id="@+id/signout"></item>
 </menu>

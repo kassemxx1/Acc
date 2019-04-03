@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -234,6 +235,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.takarir) {
             Intent aboutintet = new Intent(MainActivity.this, reports.class);
+            startActivity(aboutintet);
+        }if (id == R.id.signout) {
+         //   FirebaseAuth.getInstance().signOut();
+            Intent aboutintet = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(aboutintet);
         }
 

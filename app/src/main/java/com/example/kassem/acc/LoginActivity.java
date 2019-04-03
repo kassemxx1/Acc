@@ -1,5 +1,6 @@
 package com.example.kassem.acc;
 
+
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -71,5 +72,15 @@ String Password;
                         // ...
                     }
                 });
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        intent.putExtra("emailll",user.getEmail().toString());
+        startActivity(intent);
     }
 }
